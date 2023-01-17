@@ -13,5 +13,4 @@ terraform {
 
 provider "aws" {
   region  = var.region[terraform.workspace]
-  profile = var.aws_profile[terraform.workspace]
 }
