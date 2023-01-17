@@ -1,0 +1,52 @@
+name: Despliegue en testing
+
+# on:
+#    push:
+#      branches: [ testing ]
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  deploy:
+    name: Deploy
+    environment:
+      name: test
+    runs-on: ubuntu-latest
+
+    permissions:  
+      id-token: write  
+      contents: read
+    steps:
+      - name: Git clone the repository
+        uses: actions/checkout@v3
+
+      - name: configure aws credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-to-assume: ${{ secrets.ARN_ROLE_NAME_DEPLOY_TEST }}
+          aws-region: ${{secrets.AWS_REGION_TEST}}
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+
+      - name: Terraform Workflow
+      #  working-directory: aws_s3_bucket
+        run: |
+          terraform init
+      - name: Select Workspace
+        run: |
+          terraform workspace list -backend-config="bucket=${{env.BUCKET_NAME_TEST}}" -backend-config="key=state/terraform.tfstate" -backend-config="profile=cbtest" -backend-config="encrypt=true"
+          terraform workspace select ${{ env.environment }} || terraform workspace new ${{ env.environment }}
+      - name: Terraform Validate
+        run: |
+          terraform state pull
+          terraform fmt
+          terraform validate
+      - name: Terraform Plan
+        run:  terraform plan
+      # - name: Terraform Apply
+      #   run: terraform apply -auto-approve
+      - name: Validate Creation/Changes
+        run: terraform state list
