@@ -1,8 +1,8 @@
 name: Despliegue en testing
 
-# on:
-#    push:
-#      branches: [ testing ]
+on:
+   push:
+     branches: [ testing ]
 
 permissions:
   id-token: write
