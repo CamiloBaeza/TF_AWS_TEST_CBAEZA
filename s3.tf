@@ -1,9 +1,7 @@
 resource "aws_s3_bucket" "s3_almacen" {
  bucket = local.s3_bucket_almacen
 }
-resource "aws_s3_bucket" "s3_tf" {
- bucket = local.s3_bucket_tf
-}
+
 resource "aws_s3_object" "s3_object_procesados_SD" {
   for_each = fileset("./Studio-develop/","**")
   bucket = aws_s3_bucket.s3_almacen.id
