@@ -3,49 +3,146 @@ resource "aws_sfn_state_machine" "sfn_state_machine" {
   role_arn = "arn:aws:iam::042670738437:role/service-role/StepFunctions-HelloWorld-role-ce33da71"
 
   definition = <<EOF
-{
-  "Comment": "An example of using Athena to query logs, get query results and send results through notification.",
-  "StartAt": "Generate example log",
-  "States": {
-    "Generate example log": {
-      "Resource": "<GENERATE_LOG_LAMBDA_FUNCTION_ARN>",
-      "Type": "Task",
-      "Next": "Run Glue crawler"
-    },
-    "Run Glue crawler": {
-      "Resource": "<INVOKE_CRAWLER_LAMBDA_FUNCTION_ARN>",
-      "Type": "Task",
-      "Next": "Start an Athena query"
-    },
-    "Start an Athena query": {
-      "Resource": "arn:aws:states:::athena:startQueryExecution.sync",
-      "Parameters": {
-        "QueryString": "<ATHENA_QUERY_STRING>",
-        "WorkGroup": "<ATHENA_WORKGROUP>"
-      },
-      "Type": "Task",
-      "Next": "Get query results"
-    },
-    "Get query results": {
-      "Resource": "arn:aws:states:::athena:getQueryResults",
-      "Parameters": {
-        "QueryExecutionId.$": "$.QueryExecution.QueryExecutionId"
-      },
-      "Type": "Task",
-      "Next": "Send query results"
-    },
-    "Send query results": {
-      "Resource": "arn:aws:states:::sns:publish",
-      "Parameters": {
-        "TopicArn": "<SNS_TOPIC_ARN>",
-        "Message": {
-          "Input.$": "$.ResultSet.Rows"
-        }
-      },
-      "Type": "Task",
-      "End": true
-    }
-  }
-}
+{ 
+
+  "Comment": "A Hello World example demonstrating various state types of the Amazon States Language", 
+
+  "StartAt": "Pass", 
+
+  "States": { 
+
+    "Pass": { 
+
+      "Comment": "A Pass state passes its input to its output, without performing work. Pass states are useful when constructing and debugging state machines.", 
+
+      "Type": "Pass", 
+
+      "Next": "Hello World example?" 
+
+    }, 
+
+    "Hello World example?": { 
+
+      "Comment": "A Choice state adds branching logic to a state machine. Choice rules can implement 16 different comparison operators, and can be combined using And, Or, and Not", 
+
+      "Type": "Choice", 
+
+      "Choices": [ 
+
+        { 
+
+          "Variable": "$.IsHelloWorldExample", 
+
+          "BooleanEquals": true, 
+
+          "Next": "Yes" 
+
+        }, 
+
+        { 
+
+          "Variable": "$.IsHelloWorldExample", 
+
+          "BooleanEquals": false, 
+
+          "Next": "No" 
+
+        } 
+
+      ], 
+
+      "Default": "Yes" 
+
+    }, 
+
+    "Yes": { 
+
+      "Type": "Pass", 
+
+      "Next": "Wait 3 sec" 
+
+    }, 
+
+    "No": { 
+
+      "Type": "Fail", 
+
+      "Cause": "Not Hello World" 
+
+    }, 
+
+    "Wait 3 sec": { 
+
+      "Comment": "A Wait state delays the state machine from continuing for a specified time.", 
+
+      "Type": "Wait", 
+
+      "Seconds": 3, 
+
+      "Next": "Parallel State" 
+
+    }, 
+
+    "Parallel State": { 
+
+      "Comment": "A Parallel state can be used to create parallel branches of execution in your state machine.", 
+
+      "Type": "Parallel", 
+
+      "Next": "Hello World", 
+
+      "Branches": [ 
+
+        { 
+
+          "StartAt": "Hello", 
+
+          "States": { 
+
+            "Hello": { 
+
+              "Type": "Pass", 
+
+              "End": true 
+
+            } 
+
+          } 
+
+        }, 
+
+        { 
+
+          "StartAt": "World", 
+
+          "States": { 
+
+            "World": { 
+
+              "Type": "Pass", 
+
+              "End": true 
+
+            } 
+
+          } 
+
+        } 
+
+      ] 
+
+    }, 
+
+    "Hello World": { 
+
+      "Type": "Pass", 
+
+      "End": true 
+
+    } 
+
+  } 
+
+} 
 EOF
 }
