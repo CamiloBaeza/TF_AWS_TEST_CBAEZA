@@ -4,149 +4,45 @@ resource "aws_sfn_state_machine" "sfn_state_machine" {
 
   definition = <<EOF
 {
-  "Comment": "An example of the Amazon States Language for managing an Amazon EKS Cluster",
-  "StartAt": "Create an EKS cluster",
+  "Comment": "An example of using Athena to query logs, get query results and send results through notification.",
+  "StartAt": "Generate example log",
   "States": {
-    "Create an EKS cluster": {
+    "Generate example log": {
+      "Resource": "<GENERATE_LOG_LAMBDA_FUNCTION_ARN>",
       "Type": "Task",
-      "Resource": "arn:<PARTITION>:states:::eks:createCluster.sync",
+      "Next": "Run Glue crawler"
+    },
+    "Run Glue crawler": {
+      "Resource": "<INVOKE_CRAWLER_LAMBDA_FUNCTION_ARN>",
+      "Type": "Task",
+      "Next": "Start an Athena query"
+    },
+    "Start an Athena query": {
+      "Resource": "arn:aws:states:::athena:startQueryExecution.sync",
       "Parameters": {
-        "Name": "ExampleCluster",
-        "ResourcesVpcConfig": {
-          "SubnetIds": [
-            "<PUBSUBNET_AZ_1>",
-            "<PUBSUBNET_AZ_2>"
-          ]
-        },
-        "RoleArn": "<EKS_SERVICE_ROLE>"
+        "QueryString": "<ATHENA_QUERY_STRING>",
+        "WorkGroup": "<ATHENA_WORKGROUP>"
       },
-      "Retry": [{
-        "ErrorEquals": [ "States.ALL" ],
-        "IntervalSeconds": 30,
-        "MaxAttempts": 2,
-        "BackoffRate": 2
-      }],
-      "ResultPath": "$.eks",
-      "Next": "Create a node group"
-    },
-    "Create a node group": {
       "Type": "Task",
-      "Resource": "arn:<PARTITION>:states:::eks:createNodegroup.sync",
+      "Next": "Get query results"
+    },
+    "Get query results": {
+      "Resource": "arn:aws:states:::athena:getQueryResults",
       "Parameters": {
-        "ClusterName": "ExampleCluster",
-        "NodegroupName": "ExampleNodegroup",
-        "NodeRole": "<NODE_ROLE>",
-        "Subnets": [
-          "<PUBSUBNET_AZ_1>",
-          "<PUBSUBNET_AZ_2>"
-        ]
+        "QueryExecutionId.$": "$.QueryExecution.QueryExecutionId"
       },
-      "Retry": [{
-        "ErrorEquals": [ "States.ALL" ],
-        "IntervalSeconds": 30,
-        "MaxAttempts": 2,
-        "BackoffRate": 2
-      }],
-      "ResultPath": "$.nodegroup",
-      "Next": "Run a job on EKS"
-    },
-    "Run a job on EKS": {
       "Type": "Task",
-      "Resource": "arn:<PARTITION>:states:::eks:runJob.sync",
-      "Parameters": {
-        "ClusterName": "ExampleCluster",
-        "CertificateAuthority.$": "$.eks.Cluster.CertificateAuthority.Data",
-        "Endpoint.$": "$.eks.Cluster.Endpoint",
-        "LogOptions": {
-          "RetrieveLogs": true
-        },
-        "Job": {
-          "apiVersion": "batch/v1",
-          "kind": "Job",
-          "metadata": {
-            "name": "example-job"
-          },
-      "ResultSelector": {
-        "status.$": "$.status",
-        "logs.$": "$.logs..pi"
-      },
-      "ResultPath": "$.RunJobResult",
-      "Next": "Examine output"
+      "Next": "Send query results"
     },
-    "Examine output": {
-      "Type": "Choice",
-      "Choices": [
-        {
-          "And": [
-            {
-              "Variable": "$.RunJobResult.logs[0]",
-              "NumericGreaterThan": 3.141
-            },
-            {
-              "Variable": "$.RunJobResult.logs[0]",
-              "NumericLessThan": 3.142
-            }
-          ],
-          "Next": "Send expected result"
-        }
-      ],
-      "Default": "Send unexpected result"
-    },
-    "Send expected result": {
-      "Type": "Task",
-      "Resource": "arn:<Partition>:states:::sns:publish",
+    "Send query results": {
+      "Resource": "arn:aws:states:::sns:publish",
       "Parameters": {
-        "TopicArn": "<SNS Topic>",
+        "TopicArn": "<SNS_TOPIC_ARN>",
         "Message": {
-          "Input.$": "States.Format('Saw expected value for pi: {}', $.RunJobResult.logs[0])"
+          "Input.$": "$.ResultSet.Rows"
         }
       },
-      "ResultPath": "$.SNSResult",
-      "Next": "Delete job"
-    },
-    "Send unexpected result": {
       "Type": "Task",
-      "Resource": "arn:<Partition>:states:::sns:publish",
-      "Parameters": {
-        "TopicArn": "<SNS Topic>",
-        "Message": {
-          "Input.$": "States.Format('Saw unexpected value for pi: {}', $.RunJobResult.logs[0])"
-        }
-      },
-      "ResultPath": "$.SNSResult",
-      "Next": "Delete job"
-    },
-    "Delete job": {
-      "Type": "Task",
-      "Resource": "arn:<PARTITION>:states:::eks:call",
-      "Parameters": {
-        "ClusterName": "ExampleCluster",
-        "CertificateAuthority.$": "$.eks.Cluster.CertificateAuthority.Data",
-        "Endpoint.$": "$.eks.Cluster.Endpoint",
-        "Method": "DELETE",
-        "Path": "/apis/batch/v1/namespaces/default/jobs/example-job"
-      },
-      "ResultSelector": {
-        "status.$": "$.ResponseBody.status"
-      },
-      "ResultPath": "$.DeleteJobResult",
-      "Next": "Delete node group"
-    },
-    "Delete node group": {
-      "Type": "Task",
-      "Resource": "arn:<PARTITION>:states:::eks:deleteNodegroup.sync",
-      "Parameters": {
-        "ClusterName": "ExampleCluster",
-        "NodegroupName": "ExampleNodegroup"
-      },
-      "Next": "Delete cluster"
-    },
-    "Delete cluster": {
-      "Type": "Task",
-      "Resource": "arn:<PARTITION>:states:::eks:deleteCluster.sync",
-      "Parameters": {
-        "Name": "ExampleCluster"
-      },
       "End": true
     }
   }
