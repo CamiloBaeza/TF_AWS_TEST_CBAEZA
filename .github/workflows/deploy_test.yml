@@ -38,7 +38,7 @@ jobs:
       - name: Select Workspace
         run: |
           terraform workspace list 
-          terraform workspace select ${{ env.environment }} || terraform workspace new ${{ env.environment }}
+          terraform workspace select test || terraform workspace new test
       - name: Terraform Validate
         run: |
           terraform state pull
