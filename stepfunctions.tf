@@ -4,7 +4,7 @@ resource "aws_sfn_state_machine" "sfn_state_machine" {
 
   definition = <<EOF
 {
-  "Comment": "A Hello World example demonstrating various state types of the Amazon States Language",
+  "Comment": "COMENTARIO nuevo",
   "StartAt": "Pass",
   "States": {
     "Pass": {
