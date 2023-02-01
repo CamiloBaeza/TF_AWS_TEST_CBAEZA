@@ -1,5 +1,5 @@
 data "aws_db_subnet_group" "dbsg" {
-  name       = ["dbsubnet"]
+  name       = [var.subnet_db_name]
 }
 
 resource "aws_db_instance" "instancia_db_test" {

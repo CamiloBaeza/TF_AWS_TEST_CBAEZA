@@ -7,3 +7,4 @@ project = "punkrock"
 # }
 
 sg_vpc_id =  "sg-09b59ff6264bcecd5"
+subnet_db_name = "dbsubnet"
