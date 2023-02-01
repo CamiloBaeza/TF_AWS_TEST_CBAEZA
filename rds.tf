@@ -1,5 +1,5 @@
 data "aws_db_subnet_group" "dbsg" {
-  name       = "terraform_subnet"
+  name       = ["dbsubnet"]
 }
 
 resource "aws_db_instance" "instancia_db_test" {
