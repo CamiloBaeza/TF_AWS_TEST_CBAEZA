@@ -13,5 +13,5 @@ resource "aws_db_instance" "instancia_db_test" {
   parameter_group_name = "default.mysql5.7"
   skip_final_snapshot  = true
   vpc_security_group_ids = "sg-09b59ff6264bcecd5"
-  db_subnet_group_name = aws_db_subnet_group.dbsg.name
+  db_subnet_group_name = data.aws_db_subnet_group.dbsg.name
 }
