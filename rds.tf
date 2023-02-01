@@ -1,4 +1,4 @@
-resource "aws_db_subnet_group" "dbsg" {
+data "aws_db_subnet_group" "dbsg" {
   name       = "terraform_subnet"
 }
 
