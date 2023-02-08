@@ -1,3 +1,4 @@
+#https://developer.hashicorp.com/terraform/language/functions/cidrsubnets
 variable "project" {
   type        = string
   description = "Project Name"
