@@ -36,7 +36,7 @@ resource "aws_route_table" "rtb2" {
   vpc_id         = data.aws_vpc.vpc2.id
   route {
     cidr_block = "0.0.0.0/0"
-    transit_gateway_id  = aws_ec2_transit_gateway.tgw.id
+    transit_gateway_id  = "tgw-0f4727f2b810a53b5" #aws_ec2_transit_gateway.tgw.id
   }
 }
 
