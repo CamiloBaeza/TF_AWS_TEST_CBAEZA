@@ -20,17 +20,17 @@ resource "aws_vpc" "vpc" {
 #   availability_zone       = ["us-east-1b"]
 # }
 
-resource "aws_subnet" "subnet1_yolo" {
-  cidr_block              = "10.250.0.0/20"
-  vpc_id                  = data.aws_vpc.vpc2.id
-  map_public_ip_on_launch = var.map_public_ip_on_launch
-}
+# resource "aws_subnet" "subnet1_yolo" {
+#   cidr_block              = "10.250.0.0/20"
+#   vpc_id                  = data.aws_vpc.vpc2.id
+#   map_public_ip_on_launch = var.map_public_ip_on_launch
+# }
 
-resource "aws_subnet" "subnet2_yolo" {
-  cidr_block              = "10.250.16.0/20"
-  vpc_id                  = data.aws_vpc.vpc2.id
-  map_public_ip_on_launch = var.map_public_ip_on_launch
-}
+# resource "aws_subnet" "subnet2_yolo" {
+#   cidr_block              = "10.250.16.0/20"
+#   vpc_id                  = data.aws_vpc.vpc2.id
+#   map_public_ip_on_launch = var.map_public_ip_on_launch
+# }
 
 # resource "aws_route_table" "rtb-porlahorda" {
 #   vpc_id         = data.aws_vpc.vpc2.id
@@ -89,8 +89,8 @@ resource "aws_subnet" "subnet2_yolo" {
 #   }
 # }
 
-resource "aws_nat_gateway" "example" {
-  connectivity_type = "private"
-  subnet_id         = aws_subnet.subnet1_yolo.id
+# resource "aws_nat_gateway" "example" {
+#   connectivity_type = "private"
+#   subnet_id         = aws_subnet.subnet1_yolo.id
     
-  }
+# }
