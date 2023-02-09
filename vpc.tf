@@ -32,9 +32,9 @@ resource "aws_subnet" "subnet2_yolo" {
   map_public_ip_on_launch = var.map_public_ip_on_launch
 }
 
-resource "aws_route_table" "rtb-porlahorda" {
-  vpc_id         = data.aws_vpc.vpc2.id
-}
+# resource "aws_route_table" "rtb-porlahorda" {
+#   vpc_id         = data.aws_vpc.vpc2.id
+# }
 # resource "aws_route_table" "rtb-porlahorda2" {
 #   vpc_id         = data.aws_vpc.vpc2.id
 #   route {
