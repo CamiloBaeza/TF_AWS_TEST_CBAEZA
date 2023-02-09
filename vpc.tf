@@ -8,22 +8,25 @@ resource "aws_vpc" "vpc" {
   cidr_block           = var.vpc_cidr_block
 }
 
-# resource "aws_subnet" "subnet1" {
-#   cidr_block              = "10.250.0.0/20"
-#   vpc_id                  = data.aws_vpc.vpc2.id
-# }
-# resource "aws_subnet" "subnet2" {
-#   cidr_block              = "10.250.16.0/20"
-#   vpc_id                  = data.aws_vpc.vpc2.id
-# }
-# resource "aws_subnet" "subnet3" {
-#   cidr_block              = "10.250.32.0/20"
-#   vpc_id                  = data.aws_vpc.vpc2.id
-# }
-# resource "aws_subnet" "subnet4" {
-#   cidr_block              = "10.250.64.0/20"
-#   vpc_id                  = data.aws_vpc.vpc2.id
-# }
+resource "aws_subnet" "subnet1" {
+  cidr_block              = "10.250.0.0/20"
+  vpc_id                  = data.aws_vpc.vpc2.id
+}
+resource "aws_subnet" "subnet2" {
+  cidr_block              = "10.250.16.0/20"
+  vpc_id                  = data.aws_vpc.vpc2.id
+}
+resource "aws_subnet" "subnet3" {
+  cidr_block              = "10.32.14.128/25"
+  vpc_id                  = data.aws_vpc.vpc2.id
+}
+resource "aws_subnet" "subnet4" {
+  cidr_block              = "10.32.14.0/25"
+  vpc_id                  = data.aws_vpc.vpc2.id
+}
+
+
+
 
 # resource "aws_route_table" "rtb1" {
 #   vpc_id         = data.aws_vpc.vpc2.id
