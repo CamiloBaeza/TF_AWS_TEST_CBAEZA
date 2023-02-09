@@ -36,7 +36,7 @@ resource "aws_route_table" "rtb2" {
   vpc_id         = data.aws_vpc.vpc2.id
   route {
     cidr_block = "0.0.0.0/0"
-    transit_gateway_id  = "tgw-0f4727f2b810a53b5" #aws_ec2_transit_gateway.tgw.id
+    transit_gateway_id  =  aws_ec2_transit_gateway.tgw.id
   }
 }
 
@@ -51,12 +51,11 @@ resource "aws_ec2_transit_gateway" "tgw" {
   auto_accept_shared_attachments = "enable"
   vpn_ecmp_support  = "enable"
 }
-
-# resource "aws_ec2_transit_gateway_vpc_attachment" "tgw-attachment" {
-#   subnet_ids         = [aws_subnet.subnet1.id,aws_subnet.subnet2.id]
-#   transit_gateway_id = aws_ec2_transit_gateway.tgw.id
-#   vpc_id             = data.aws_vpc.vpc2.id
-# }
+resource "aws_ec2_transit_gateway_vpc_attachment" "tgw-attachment" {
+  subnet_ids         = [aws_subnet.subnet2.id,aws_subnet.subnet3.id]
+  transit_gateway_id = aws_ec2_transit_gateway.tgw.id
+  vpc_id             = data.aws_vpc.vpc2.id
+}
 
 resource "aws_route_table_association" "rta1-subnet1" {
   subnet_id      = aws_subnet.subnet1.id
