@@ -6,16 +6,16 @@ resource "aws_vpc" "vpc" {
   #enable_dns_hostnames = true
 }
 
-resource "aws_subnet" "subnet1" {
-  cidr_block              = ["12.0.0.0/28"]
-  vpc_id                  = aws_vpc.vpc.id
-  availability_zone       = ["us-east-1b"]
-}
-resource "aws_subnet" "subnet2" {
-  cidr_block              = ["12.0.0.16/28"]
-  vpc_id                  = aws_vpc.vpc.id
-  availability_zone       = ["us-east-1b"]
-}
+# resource "aws_subnet" "subnet1" {
+#   cidr_block              = ["12.0.0.0/28"]
+#   vpc_id                  = aws_vpc.vpc.id
+#   availability_zone       = ["us-east-1b"]
+# }
+# resource "aws_subnet" "subnet2" {
+#   cidr_block              = ["12.0.0.16/28"]
+#   vpc_id                  = aws_vpc.vpc.id
+#   availability_zone       = ["us-east-1b"]
+# }
 
 resource "aws_subnet" "subnet1_yolo" {
   cidr_block              = ["10.250.0.0/20"]

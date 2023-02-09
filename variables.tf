@@ -25,3 +25,9 @@ variable "map_public_ip_on_launch" {
   description = "Map a public IP address for Subnet instances"
   default     = true
 }
+
+variable "vpc_id2" {
+  type        = string
+  description = "sadasdas"
+  default = "vpc-0845b166401067cbc"
+}
