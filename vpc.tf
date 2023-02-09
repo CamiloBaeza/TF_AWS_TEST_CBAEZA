@@ -35,25 +35,25 @@ resource "aws_subnet" "subnet2_yolo" {
 resource "aws_route_table" "rtb-porlahorda" {
   vpc_id         = data.aws_vpc.vpc2.id
 }
-resource "aws_route_table" "rtb-porlahorda2" {
-  vpc_id         = data.aws_vpc.vpc2.id
-  route {
-    cidr_block = "0.0.0.0/0"
-    nat_gateway_id = aws_nat_gateway.example.id
-  }
-  # route {
-  #   destination_prefix_list_id = data.aws_ec2_managed_prefix_list.prefix_list.id
-  #   vpc_endpoint_id = aws_vpc_endpoint.s3.id
-  # }
-}
-resource "aws_route_table_association" "rta-subnet1" {
-  subnet_id      = aws_subnet.subnet1_yolo.id
-  route_table_id = aws_route_table.rtb-porlahorda.id
-}
-resource "aws_route_table_association" "rta-subnet2" {
-  subnet_id      = aws_subnet.subnet2_yolo.id
-  route_table_id = aws_route_table.rtb-porlahorda.id
-}
+# resource "aws_route_table" "rtb-porlahorda2" {
+#   vpc_id         = data.aws_vpc.vpc2.id
+#   route {
+#     cidr_block = "0.0.0.0/0"
+#     nat_gateway_id = aws_nat_gateway.example.id
+#   }
+#   # route {
+#   #   destination_prefix_list_id = data.aws_ec2_managed_prefix_list.prefix_list.id
+#   #   vpc_endpoint_id = aws_vpc_endpoint.s3.id
+#   # }
+# }
+# resource "aws_route_table_association" "rta-subnet1" {
+#   subnet_id      = aws_subnet.subnet1_yolo.id
+#   route_table_id = aws_route_table.rtb-porlahorda.id
+# }
+# resource "aws_route_table_association" "rta-subnet2" {
+#   subnet_id      = aws_subnet.subnet2_yolo.id
+#   route_table_id = aws_route_table.rtb-porlahorda.id
+# }
 # resource "aws_vpc_endpoint_route_table_association" "example" {
 #   route_table_id  = aws_route_table.rtb-porlahorda2.id
 #   vpc_endpoint_id = aws_vpc_endpoint.s3.id
