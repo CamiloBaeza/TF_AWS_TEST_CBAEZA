@@ -31,13 +31,12 @@ resource "aws_subnet" "subnet2_yolo" {
 
 resource "aws_route_table" "rtb-porlahorda" {
   vpc_id         = data.aws_vpc.vpc2.id
-  # route {
-  #   saddsaads
-  #   cidr_block = "10.250.0.0/20"
-  # }
-  # route {
-  #   cidr_block = "10.250.16.0/20"
-  # }
+}
+resource "aws_route_table" "rtb-porlahorda2" {
+  vpc_id         = data.aws_vpc.vpc2.id
+  route {
+    vpc_endpoint_id = aws_vpc_endpoint.s3.id
+  }
 }
 resource "aws_route_table_association" "rta-subnet1" {
   subnet_id      = aws_subnet.subnet1_yolo.id
@@ -46,4 +45,30 @@ resource "aws_route_table_association" "rta-subnet1" {
 resource "aws_route_table_association" "rta-subnet2" {
   subnet_id      = aws_subnet.subnet2_yolo.id
   route_table_id = aws_route_table.rtb-porlahorda.id
+}
+resource "aws_vpc_endpoint_route_table_association" "example" {
+  route_table_id  = aws_route_table.rtb-porlahorda2.id
+  vpc_endpoint_id = aws_vpc_endpoint.s3.id
+}
+
+resource "aws_vpc_endpoint" "s3" {
+  vpc_id       = var.vpc_id[terraform.workspace]
+  service_name = "com.amazonaws.us-east-1.s3"
+}
+resource "aws_vpc_endpoint_policy" "example" {
+  vpc_endpoint_id = aws_vpc_endpoint.s3.id
+  policy = jsonencode({
+    "Version" : "2012-10-17",
+    "Statement" : [
+      {
+        "Sid" : "AllowAll",
+        "Effect" : "Allow",
+        "Principal" : {
+          "AWS" : "*"
+        },
+        "Action" : "*",
+        "Resource" : "*"
+      }
+    ]
+  })
 }
