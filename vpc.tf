@@ -17,7 +17,7 @@ resource "aws_subnet" "subnet2" {
   availability_zone       = ["us-east-1b"]
 }
 
-resource "aws_subnet" "subnet1" {
+resource "aws_subnet" "subnet1_yolo" {
   cidr_block              = ["10.250.0.0/20"]
   vpc_id                  = data.aws_vpc.vpc2.id
   map_public_ip_on_launch = var.map_public_ip_on_launch
