@@ -54,14 +54,6 @@ resource "aws_route_table_association" "rta-subnet2" {
   subnet_id      = aws_subnet.subnet2_yolo.id
   route_table_id = aws_route_table.rtb-porlahorda.id
 }
-resource "aws_route_table_association" "rta-subnet1a" {
-  subnet_id      = aws_subnet.subnet1_yolo.id
-  route_table_id = aws_route_table.rtb-porlahorda2.id
-}
-resource "aws_route_table_association" "rta-subnet2a" {
-  subnet_id      = aws_subnet.subnet2_yolo.id
-  route_table_id = aws_route_table.rtb-porlahorda2.id
-}
 # resource "aws_vpc_endpoint_route_table_association" "example" {
 #   route_table_id  = aws_route_table.rtb-porlahorda2.id
 #   vpc_endpoint_id = aws_vpc_endpoint.s3.id
