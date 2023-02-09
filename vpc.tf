@@ -59,27 +59,27 @@ resource "aws_route_table_association" "rta-subnet2" {
 #   vpc_endpoint_id = aws_vpc_endpoint.s3.id
 # }
 
-resource "aws_vpc_endpoint" "s3" {
-  vpc_id       = var.vpc_id2
-  service_name = "com.amazonaws.us-east-1.s3"
-}
-resource "aws_vpc_endpoint_policy" "example" {
-  vpc_endpoint_id = aws_vpc_endpoint.s3.id
-  policy = jsonencode({
-    "Version" : "2012-10-17",
-    "Statement" : [
-      {
-        "Sid" : "AllowAll",
-        "Effect" : "Allow",
-        "Principal" : {
-          "AWS" : "*"
-        },
-        "Action" : "*",
-        "Resource" : "*"
-      }
-    ]
-  })
-}
+# resource "aws_vpc_endpoint" "s3" {
+#   vpc_id       = var.vpc_id2
+#   service_name = "com.amazonaws.us-east-1.s3"
+# }
+# resource "aws_vpc_endpoint_policy" "example" {
+#   vpc_endpoint_id = aws_vpc_endpoint.s3.id
+#   policy = jsonencode({
+#     "Version" : "2012-10-17",
+#     "Statement" : [
+#       {
+#         "Sid" : "AllowAll",
+#         "Effect" : "Allow",
+#         "Principal" : {
+#           "AWS" : "*"
+#         },
+#         "Action" : "*",
+#         "Resource" : "*"
+#       }
+#     ]
+#   })
+# }
 
 # resource "aws_internet_gateway" "gw" {
 #   vpc_id = data.aws_vpc.vpc2.id
