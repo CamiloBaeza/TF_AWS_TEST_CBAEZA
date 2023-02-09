@@ -54,11 +54,11 @@ resource "aws_route_table_association" "rta-subnet2" {
   subnet_id      = aws_subnet.subnet2_yolo.id
   route_table_id = aws_route_table.rtb-porlahorda.id
 }
-resource "aws_route_table_association" "rta-subnet1" {
+resource "aws_route_table_association" "rta-subnet1a" {
   subnet_id      = aws_subnet.subnet1_yolo.id
   route_table_id = aws_route_table.rtb-porlahorda2.id
 }
-resource "aws_route_table_association" "rta-subnet2" {
+resource "aws_route_table_association" "rta-subnet2a" {
   subnet_id      = aws_subnet.subnet2_yolo.id
   route_table_id = aws_route_table.rtb-porlahorda2.id
 }
