@@ -38,8 +38,8 @@ resource "aws_route_table" "rtb-porlahorda" {
 resource "aws_route_table" "rtb-porlahorda2" {
   vpc_id         = data.aws_vpc.vpc2.id
   route {
-    destination_prefix_list_id = data.aws_ec2_managed_prefix_list.prefix_list.id
-    #vpc_endpoint_id = aws_vpc_endpoint.s3.id
+    #destination_prefix_list_id = data.aws_ec2_managed_prefix_list.prefix_list.id
+    vpc_endpoint_id = aws_vpc_endpoint.s3.id
   }
 }
 resource "aws_route_table_association" "rta-subnet1" {
