@@ -13,3 +13,15 @@ variable "subnet_db_name" {
   type        = string
   description = "subnet db name"
 }
+
+variable "vpc_cidr_block" {
+  type        = string
+  description = "Base CIDR Block for VPC"
+  default     = "12.0.0.0/16"
+}
+
+variable "map_public_ip_on_launch" {
+  type        = bool
+  description = "Map a public IP address for Subnet instances"
+  default     = true
+}
