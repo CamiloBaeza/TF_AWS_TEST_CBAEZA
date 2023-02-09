@@ -31,12 +31,13 @@ resource "aws_subnet" "subnet2_yolo" {
 
 resource "aws_route_table" "rtb-porlahorda" {
   vpc_id         = data.aws_vpc.vpc2.id
-  route {
-    cidr_block = "10.250.0.0/20"
-  }
-  route {
-    cidr_block = "10.250.16.0/20"
-  }
+  # route {
+  #   saddsaads
+  #   cidr_block = "10.250.0.0/20"
+  # }
+  # route {
+  #   cidr_block = "10.250.16.0/20"
+  # }
 }
 resource "aws_route_table_association" "rta-subnet1" {
   subnet_id      = aws_subnet.subnet1_yolo.id
