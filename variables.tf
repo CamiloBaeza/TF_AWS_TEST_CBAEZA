@@ -5,10 +5,15 @@ variable "project" {
 
 variable "sg_vpc_id" {
   type        = string
-  description = "vpc ids"
+  description = "sg vpc ids"
 }
 
 variable "subnet_db_name" {
   type        = string
   description = "subnet db name"
+}
+
+variable "vpc_id" {
+  type        = string
+  description = "vpc id"
 }
