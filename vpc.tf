@@ -39,7 +39,7 @@ resource "aws_route_table" "rtb-porlahorda2" {
   vpc_id         = data.aws_vpc.vpc2.id
   route {
     cidr_block = "0.0.0.0/0"
-    nat_gateway_id = aws_internet_gateway.gw.id
+    nat_gateway_id = aws_nat_gateway.example.id
   }
   # route {
   #   destination_prefix_list_id = data.aws_ec2_managed_prefix_list.prefix_list.id
@@ -89,13 +89,13 @@ resource "aws_vpc_endpoint_policy" "example" {
   })
 }
 
-resource "aws_internet_gateway" "gw" {
-  vpc_id = data.aws_vpc.vpc2.id
+# resource "aws_internet_gateway" "gw" {
+#   vpc_id = data.aws_vpc.vpc2.id
 
-  tags = {
-    Name = "lol"
-  }
-}
+#   tags = {
+#     Name = "lol"
+#   }
+# }
 
 resource "aws_nat_gateway" "example" {
   connectivity_type = "private"
