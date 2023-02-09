@@ -26,15 +26,14 @@ resource "aws_subnet" "subnet4" {
 }
 
 
+resource "aws_route_table" "rtb1" {
+  vpc_id         = data.aws_vpc.vpc2.id
+  route {
+    cidr_block = "0.0.0.0/0"
+    nat_gateway_id = aws_nat_gateway.nat_gateway1.id
+  }
+}
 
-
-# resource "aws_route_table" "rtb1" {
-#   vpc_id         = data.aws_vpc.vpc2.id
-#   route {
-#     cidr_block = "0.0.0.0/0"
-#     nat_gateway_id = aws_nat_gateway.nat_gateway1.id
-#   }
-# }
 # resource "aws_route_table" "rtb2" {
 #   vpc_id         = data.aws_vpc.vpc2.id
 #   route {
@@ -43,10 +42,10 @@ resource "aws_subnet" "subnet4" {
 #   }
 # }
 
-# resource "aws_nat_gateway" "nat_gateway1" {
-#   connectivity_type = "private"
-#   subnet_id         = aws_subnet.subnet1.id  
-# }
+resource "aws_nat_gateway" "nat_gateway1" {
+  connectivity_type = "private"
+  subnet_id         = aws_subnet.subnet1.id  
+}
 
 # resource "aws_ec2_transit_gateway" "tgw" {
 #   description = "terraform god xD"
