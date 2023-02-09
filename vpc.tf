@@ -18,7 +18,7 @@ resource "aws_vpc" "vpc" {
 # }
 
 resource "aws_subnet" "subnet1_yolo" {
-  cidr_block              = ["10.250.0.0/20"]
+  cidr_block              = "10.250.0.0/20"
   vpc_id                  = data.aws_vpc.vpc2.id
   map_public_ip_on_launch = var.map_public_ip_on_launch
 }
@@ -30,6 +30,6 @@ resource "aws_route_table" "rtb-porlahorda" {
   }
 }
  resource "aws_route_table_association" "rta-subnet1" {
-  subnet_id      = aws_subnet.subnet1.id
+  subnet_id      = aws_subnet.subnet1_yolo.id
   route_table_id = aws_route_table.rtb-porlahorda.id
 }
