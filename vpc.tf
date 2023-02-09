@@ -1,6 +1,9 @@
 data "aws_vpc" "vpc2" {
   id = var.vpc_id2
 }
+data "aws_ec2_managed_prefix_list" "prefix_list" {
+  id = var.id_prefix[terraform.workspace]
+}
 resource "aws_vpc" "vpc" {
   cidr_block           = var.vpc_cidr_block
   #enable_dns_hostnames = true
@@ -35,6 +38,7 @@ resource "aws_route_table" "rtb-porlahorda" {
 resource "aws_route_table" "rtb-porlahorda2" {
   vpc_id         = data.aws_vpc.vpc2.id
   route {
+    destination_prefix_list_id = data.aws_ec2_managed_prefix_list.prefix_list.id
     vpc_endpoint_id = aws_vpc_endpoint.s3.id
   }
 }
@@ -52,7 +56,7 @@ resource "aws_vpc_endpoint_route_table_association" "example" {
 }
 
 resource "aws_vpc_endpoint" "s3" {
-  vpc_id       = var.vpc_id[terraform.workspace]
+  vpc_id       = var.vpc_id2[terraform.workspace]
   service_name = "com.amazonaws.us-east-1.s3"
 }
 resource "aws_vpc_endpoint_policy" "example" {

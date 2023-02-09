@@ -31,3 +31,10 @@ variable "vpc_id2" {
   description = "sadasdas"
   default = "vpc-0845b166401067cbc"
 }
+
+
+variable "id_prefix" {
+  type        = string
+  description = "sadasdas"
+  default = "pl-02cd2c6b"
+}
