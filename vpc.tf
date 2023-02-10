@@ -5,17 +5,17 @@
 #   id = var.id_prefix
 # }
 # primero esto
-resource "aws_vpc" "vpc" {
-  cidr_block = var.vpc_cidr_block
-  enable_dns_hostnames = true
-  tags = {
-    Name = "VPC-DEJAVU"
-  }
-}
-resource "aws_vpc_ipv4_cidr_block_association" "cidr1" {
-  vpc_id     = aws_vpc.vpc.id
-  cidr_block = "10.250.0.0/16"
-}
+# resource "aws_vpc" "vpc" {
+#   cidr_block = var.vpc_cidr_block
+#   enable_dns_hostnames = true
+#   tags = {
+#     Name = "VPC-DEJAVU"
+#   }
+# }
+# resource "aws_vpc_ipv4_cidr_block_association" "cidr1" {
+#   vpc_id     = aws_vpc.vpc.id
+#   cidr_block = "10.250.0.0/16"
+# }
 #despues todo lo demas
 # resource "aws_subnet" "subnet1" {
 #   cidr_block = "10.250.128.0/20"
@@ -36,6 +36,10 @@ resource "aws_vpc_ipv4_cidr_block_association" "cidr1" {
 #   cidr_block = "10.32.14.128/25"
 #   vpc_id = aws_vpc.vpc.id
 #   availability_zone = "us-east-1b"
+# }
+# resource "aws_db_subnet_group" "db_sub_gp" {
+#   name       = "db-subnet-gp"
+#   subnet_ids = [aws_subnet.subnet1.id, aws_subnet.subnet2.id, aws_subnet.subnet3.id, aws_subnet.subnet4.id]
 # }
 # resource "aws_route_table" "rtb1" {
 #   vpc_id  = aws_vpc.vpc.id
