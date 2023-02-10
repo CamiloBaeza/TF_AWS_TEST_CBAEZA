@@ -1,7 +1,7 @@
 resource "aws_security_group" "RDS-databases-sg-Private" {
   name        = "RDS-databases-sg-Private"
   description = "Security group for RDS - Created by terraform"
-  vpc_id      = data.aws_vpc.vpc2.id
+  vpc_id      = aws_vpc.vpc.id
   # tags = merge(local.common_tags, {
   #   Name = "${local.name_prefix}-RDS-databases-sg-Private"
   # })
@@ -9,7 +9,7 @@ resource "aws_security_group" "RDS-databases-sg-Private" {
 resource "aws_security_group" "DMS-replication-instances-Private" {
   name        = "DMS-Private"
   description = "Security group for DMS replication instances - Created by terraform"
-  vpc_id      = data.aws_vpc.vpc2.id
+  vpc_id      = aws_vpc.vpc.id
   # tags = merge(local.common_tags, {
   #   Name = "${local.name_prefix}-DMS-replication-instances-Private"
   # })
