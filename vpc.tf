@@ -5,14 +5,10 @@
 #   id = var.id_prefix
 # }
 resource "aws_vpc" "vpc" {
-  #cidr_block = var.vpc_cidr_block
+  cidr_block = var.vpc_cidr_block
   enable_dns_hostnames = true
 }
 resource "aws_vpc_ipv4_cidr_block_association" "cidr1" {
-  vpc_id     = aws_vpc.vpc.id
-  cidr_block = "10.32.14.0/24"
-}
-resource "aws_vpc_ipv4_cidr_block_association" "cidr2" {
   vpc_id     = aws_vpc.vpc.id
   cidr_block = "10.250.0.0/16"
 }
