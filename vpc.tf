@@ -15,7 +15,7 @@ resource "aws_subnet" "subnet1" {
 resource "aws_subnet" "subnet2" {
   cidr_block = "10.250.16.0/20"
   vpc_id = data.aws_vpc.vpc2.id
-  vailability_zone = "us-east-1b"
+  availability_zone = "us-east-1b"
 }
 resource "aws_subnet" "subnet3" {
   cidr_block = "10.32.14.0/25"
