@@ -1,9 +1,9 @@
-data "aws_vpc" "vpc2" {
-  id = var.vpc_id2
-}
-data "aws_ec2_managed_prefix_list" "prefix_list" {
-  id = var.id_prefix
-}
+# data "aws_vpc" "vpc2" {
+#   id = var.vpc_id2
+# }
+# data "aws_ec2_managed_prefix_list" "prefix_list" {
+#   id = var.id_prefix
+# }
 resource "aws_vpc" "vpc" {
   #cidr_block = var.vpc_cidr_block
   enable_dns_hostnames = true
