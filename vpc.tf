@@ -34,10 +34,11 @@ resource "aws_subnet" "subnet4" {
 }
 resource "aws_route_table" "rtb1" {
   vpc_id  = aws_vpc.vpc.id
-  route {
-    cidr_block = "0.0.0.0/0"
-    nat_gateway_id = aws_nat_gateway.nat_gateway1.id
-  }
+  route = []
+  # route {
+  #   cidr_block = "0.0.0.0/0"
+  #   nat_gateway_id = aws_nat_gateway.nat_gateway1.id
+  # }
 }
 # resource "aws_route_table" "rtb2" {
 #   vpc_id = data.aws_vpc.vpc2.id
