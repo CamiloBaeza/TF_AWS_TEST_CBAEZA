@@ -23,7 +23,7 @@ resource "aws_subnet" "subnet3" {
   availability_zone = "us-east-1a"
 }
 resource "aws_subnet" "subnet4" {
-  cidr_block = "10.32.14.256/25"
+  cidr_block = "10.32.14.128/25"
   vpc_id = data.aws_vpc.vpc2.id
   availability_zone = "us-east-1b"
 }
