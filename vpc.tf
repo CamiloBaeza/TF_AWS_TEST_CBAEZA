@@ -35,14 +35,14 @@ resource "aws_subnet" "subnet4" {
   vpc_id = aws_vpc.vpc.id
   availability_zone = "us-east-1b"
 }
-resource "aws_route_table" "rtb1" {
-  vpc_id  = aws_vpc.vpc.id
-  #route = []
-  route {
-    cidr_block = "0.0.0.0/0"
-    nat_gateway_id = aws_nat_gateway.nat_gateway1.id
-  }
-}
+# resource "aws_route_table" "rtb1" {
+#   vpc_id  = aws_vpc.vpc.id
+#   #route = []
+#   route {
+#     cidr_block = "0.0.0.0/0"
+#     nat_gateway_id = aws_nat_gateway.nat_gateway1.id
+#   }
+# }
 resource "aws_route_table" "rtb2" {
   vpc_id = aws_vpc.vpc.id
   route {
