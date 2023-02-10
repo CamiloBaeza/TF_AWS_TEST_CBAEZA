@@ -18,12 +18,12 @@ resource "aws_subnet" "subnet2" {
   availability_zone = "us-east-1b"
 }
 resource "aws_subnet" "subnet3" {
-  cidr_block = "10.32.14.32/25"
+  cidr_block = "10.32.14.64/25"
   vpc_id = data.aws_vpc.vpc2.id
   availability_zone = "us-east-1a"
 }
 resource "aws_subnet" "subnet4" {
-  cidr_block = "10.32.14.64/25"
+  cidr_block = "10.32.14.192/25"
   vpc_id = data.aws_vpc.vpc2.id
   availability_zone = "us-east-1b"
 }
