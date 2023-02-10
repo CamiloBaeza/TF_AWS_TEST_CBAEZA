@@ -11,10 +11,10 @@ resource "aws_vpc" "vpc" {
     Name = "VPC-DEJAVU"
   }
 }
-resource "aws_vpc_ipv4_cidr_block_association" "cidr1" {
-  vpc_id     = aws_vpc.vpc.id
-  cidr_block = "10.250.0.0/16"
-}
+# resource "aws_vpc_ipv4_cidr_block_association" "cidr1" {
+#   vpc_id     = aws_vpc.vpc.id
+#   cidr_block = "10.250.0.0/16"
+# }
 # resource "aws_subnet" "subnet1" {
 #   cidr_block = "10.250.128.0/20"
 #   vpc_id = aws_vpc.vpc.id
