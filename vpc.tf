@@ -51,10 +51,10 @@ resource "aws_nat_gateway" "nat_gateway1" {
   connectivity_type = "private"
   subnet_id         = aws_subnet.subnet1.id  
 }
-# resource "aws_nat_gateway" "nat_gateway2" {
-#   connectivity_type = "private"
-#   subnet_id         = aws_subnet.subnet2.id  
-# }
+resource "aws_nat_gateway" "nat_gateway2" {
+  connectivity_type = "private"
+  subnet_id         = aws_subnet.subnet2.id  
+}
 # resource "aws_ec2_transit_gateway" "tgw" {
 #   description = "terraform god xD"
 #   dns_support = "enable"
