@@ -4,6 +4,7 @@
 # data "aws_ec2_managed_prefix_list" "prefix_list" {
 #   id = var.id_prefix
 # }
+# primero esto
 resource "aws_vpc" "vpc" {
   cidr_block = var.vpc_cidr_block
   enable_dns_hostnames = true
@@ -15,6 +16,7 @@ resource "aws_vpc_ipv4_cidr_block_association" "cidr1" {
   vpc_id     = aws_vpc.vpc.id
   cidr_block = "10.250.0.0/16"
 }
+#despues todo lo demas
 resource "aws_subnet" "subnet1" {
   cidr_block = "10.250.128.0/20"
   vpc_id = aws_vpc.vpc.id
@@ -35,14 +37,14 @@ resource "aws_subnet" "subnet4" {
   vpc_id = aws_vpc.vpc.id
   availability_zone = "us-east-1b"
 }
-# resource "aws_route_table" "rtb1" {
-#   vpc_id  = aws_vpc.vpc.id
-#   #route = []
-#   route {
-#     cidr_block = "0.0.0.0/0"
-#     nat_gateway_id = aws_nat_gateway.nat_gateway1.id
-#   }
-# }
+resource "aws_route_table" "rtb1" {
+  vpc_id  = aws_vpc.vpc.id
+  #route = []
+  route {
+    cidr_block = "0.0.0.0/0"
+    nat_gateway_id = aws_nat_gateway.nat_gateway1.id
+  }
+}
 resource "aws_route_table" "rtb2" {
   vpc_id = aws_vpc.vpc.id
   route {
@@ -50,14 +52,14 @@ resource "aws_route_table" "rtb2" {
     transit_gateway_id  =  aws_ec2_transit_gateway.tgw.id
   }
 }
-# resource "aws_nat_gateway" "nat_gateway1" {
-#   connectivity_type = "private"
-#   subnet_id         = aws_subnet.subnet1.id  
-# }
-# resource "aws_nat_gateway" "nat_gateway2" {
-#   connectivity_type = "private"
-#   subnet_id         = aws_subnet.subnet2.id  
-# }
+resource "aws_nat_gateway" "nat_gateway1" {
+  connectivity_type = "private"
+  subnet_id         = aws_subnet.subnet1.id  
+}
+resource "aws_nat_gateway" "nat_gateway2" {
+  connectivity_type = "private"
+  subnet_id         = aws_subnet.subnet2.id  
+}
 resource "aws_ec2_transit_gateway" "tgw" {
   description = "terraform god xD"
   dns_support = "enable"
