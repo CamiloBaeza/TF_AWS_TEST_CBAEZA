@@ -1,7 +1,6 @@
 # data "aws_db_subnet_group" "database" {
 #   name = "db-subnet-manoxd"
 # }
-
 # resource "aws_db_instance" "instancia_db_test" {
 #   allocated_storage    = 10
 #   db_name              = "mydb"

@@ -1,22 +1,19 @@
-# data "aws_vpc" "vpc2" {
-#   id = var.vpc_id2
-# }
-# data "aws_ec2_managed_prefix_list" "prefix_list" {
-#   id = var.id_prefix
-# }
-# primero esto
-# resource "aws_vpc" "vpc" {
-#   cidr_block = var.vpc_cidr_block
-#   enable_dns_hostnames = true
-#   tags = {
-#     Name = "VPC-DEJAVU"
-#   }
-# }
-# resource "aws_vpc_ipv4_cidr_block_association" "cidr1" {
-#   vpc_id     = aws_vpc.vpc.id
-#   cidr_block = "10.250.0.0/16"
-# }
-#despues todo lo demas
+# primero crear la vpc y los bloques
+
+resource "aws_vpc" "vpc" {
+  cidr_block = var.vpc_cidr_block
+  enable_dns_hostnames = true
+  tags = {
+    Name = "VPC-DEJAVU"
+  }
+}
+resource "aws_vpc_ipv4_cidr_block_association" "cidr1" {
+  vpc_id     = aws_vpc.vpc.id
+  cidr_block = "10.250.0.0/16"
+}
+
+# segundo las subnets
+
 # resource "aws_subnet" "subnet1" {
 #   cidr_block = "10.250.128.0/20"
 #   vpc_id = aws_vpc.vpc.id
@@ -79,7 +76,12 @@
 
 
 ##############################################################
-
+# data "aws_vpc" "vpc2" {
+#   id = var.vpc_id2
+# }
+# data "aws_ec2_managed_prefix_list" "prefix_list" {
+#   id = var.id_prefix
+# }
 
 
 #Explicit subnet associations
