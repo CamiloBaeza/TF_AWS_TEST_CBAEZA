@@ -1,0 +1,42 @@
+name: Despliegue en testing
+#
+on:
+   push:
+     branches: [ testing ]
+jobs:
+  deploy:
+    name: Deploy
+    environment:
+      name: test
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - name: configure aws credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-to-assume: arn:aws:iam::042670738437:role/rol-github-terraform
+          aws-region: us-east-1
+      - uses: hashicorp/setup-terraform@v1
+        name: Configure Terraform
+        with:
+          terraform_version: 1.1.4
+      - name: Initialize the Terraform
+        run: |
+          terraform init  -backend-config="encrypt=true" -backend-config="bucket=tarrito-punkrock-cb-tf-test" -backend-config="key=state/terraform.tfstate" -backend-config="region=us-east-1"
+      - name: Select Workspace
+        run: |
+          terraform workspace list
+          terraform workspace select test || terraform workspace new test
+      - name: Terraform Validate
+        run: |
+          terraform state pull
+          terraform fmt
+          terraform validate
+      - name: Terraform Plan
+        run:  terraform plan
+      - name: Terraform Apply
+        run: terraform apply -auto-approve
+      - name: Validate Creation/Changes
+        run: terraform state list
