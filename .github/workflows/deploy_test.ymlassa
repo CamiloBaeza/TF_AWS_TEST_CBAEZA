@@ -1,0 +1,45 @@
+name: Despliegue en testing
+
+on:
+   push:
+     branches: [ testing ]
+
+jobs:
+  deploy:
+    name: Deploy
+    environment:
+      name: test
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v2
+        name: Checkout
+      - name: Configure AWS Profile
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        run: |
+          aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }} --profile cbtest
+          aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }} --profile cbtest
+          aws configure set region us-east-1 --profile cbtest
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+      - name: Terraform Workflow
+        run: |
+          terraform init -backend-config="bucket=tarrito-punkrock-cb-tf-test" -backend-config="key=state/terraform.tfstate" -backend-config="profile=cbtest" -backend-config="encrypt=true" -backend-config="region=us-east-1"
+      - name: Select Workspace
+        run: |
+          terraform workspace list 
+          terraform workspace select test || terraform workspace new test
+      - name: Terraform Validate
+        run: |
+          terraform state pull
+          terraform fmt
+          terraform validate
+      - name: Terraform Plan
+        run:  terraform plan
+      # - name: Terraform Apply
+      #   run: terraform apply -auto-approve
+      - name: Validate Creation/Changes
+        run: terraform state list
