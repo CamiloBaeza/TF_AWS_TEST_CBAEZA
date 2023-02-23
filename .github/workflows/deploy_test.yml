@@ -31,7 +31,7 @@ jobs:
       - name: Terraform Workflow
       #  working-directory: aws_s3_bucket
         run: |
-          terraform init -backend-config="bucket=tarrito-punkrock-cb-tf-test" -backend-config="key=state/terraform.tfstate" -backend-config="encrypt=true" -backend-config="region=us-east-1"
+          terraform init -backend-config="bucket=tarrito-punkrock-cb-tf-test" -backend-config="key=state/terraform.tfstate" -backend-config="encrypt=true"
       - name: Select Workspace
         run: |
           terraform workspace list 
