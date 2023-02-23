@@ -1,12 +1,8 @@
 name: Despliegue en testing con rol
-#SAD
+
 on:
    push:
      branches: [ testing ]
-
-permissions:
-  id-token: write
-  contents: read
 
 jobs:
   deploy:
