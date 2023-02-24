@@ -11,7 +11,7 @@ jobs:
       name: test
     runs-on: ubuntu-latest
     permissions:
-      #id-token: write
+      id-token: write
       contents: read
     steps:
       # - name: configure aws credentials
@@ -19,6 +19,8 @@ jobs:
       #   with:
       #     role-to-assume: arn:aws:iam::042670738437:role/rol-github-terraform
       #     aws-region: us-east-1
+      - uses: actions/checkout@v2
+        name: Checkout      
       - name: Configure AWS Profile
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
