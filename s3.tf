@@ -1,7 +1,7 @@
 #al loco que me robo el nombre del tarro, lo odio :C
-resource "aws_s3_bucket" "s3_almacen" {
- bucket = local.s3_bucket_almacen
-}
+# resource "aws_s3_bucket" "s3_almacen" {
+#  bucket = local.s3_bucket_almacen
+# }
 
 # resource "aws_s3_object" "s3_object_procesados_SD" {
 #   for_each = fileset("./Studio-develop/","**")
@@ -61,11 +61,11 @@ resource "aws_s3_bucket" "s3_almacen" {
 #   etag = filemd5("./Folder4/${each.value}")
 # }
 
-resource "aws_s3_object" "folder5"{
-  bucket = aws_s3_bucket.s3_almacen.id
-  key = "Folder5/"
-  source = "/dev/null"
-}
+# resource "aws_s3_object" "folder5"{
+#   bucket = aws_s3_bucket.s3_almacen.id
+#   key = "Folder5/"
+#   source = "/dev/null"
+# }
 
 # resource "aws_s3_object" "s3_object_folder5_upload" {
 #   for_each = fileset("./Folder5/","**")
