@@ -5,6 +5,7 @@ on:
      branches: [ testing ]
 # -backend-config="region=us-east-1"
 #   aws configure set region us-east-1 --profile cbaeza    
+#   aws-region: us-east-1
 jobs:
   deploy:
     name: Deploy
@@ -19,7 +20,6 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v1
         with:
           role-to-assume: arn:aws:iam::042670738437:role/rol-github-terraform
-          aws-region: us-east-1
       - uses: actions/checkout@v2
         name: Checkout      
       - name: Configure AWS Profile
