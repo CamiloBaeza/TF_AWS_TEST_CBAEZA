@@ -3,7 +3,8 @@ name: Despliegue en testing con rol
 on:
    push:
      branches: [ testing ]
-#
+# -backend-config="region=us-east-1"
+#   aws configure set region us-east-1 --profile cbaeza    
 jobs:
   deploy:
     name: Deploy
@@ -28,14 +29,13 @@ jobs:
         run: |
           aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }} --profile cbaeza
           aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }} --profile cbaeza
-          aws configure set region us-east-1 --profile cbaeza          
       - uses: hashicorp/setup-terraform@v1
         name: Configure Terraform
         with:
           terraform_version: 1.1.4
       - name: Initialize the Terraform
         run: |
-          terraform init -backend-config="encrypt=true" -backend-config="bucket=tarrito-punkrock-cb-tf-test" -backend-config="key=state/terraform.tfstate" -backend-config="region=us-east-1" -backend-config="profile=cbaeza"
+          terraform init -backend-config="encrypt=true" -backend-config="bucket=tarrito-punkrock-cb-tf-test" -backend-config="key=state/terraform.tfstate"  -backend-config="profile=cbaeza"
       - name: Select Workspace
         run: |
           terraform workspace list
