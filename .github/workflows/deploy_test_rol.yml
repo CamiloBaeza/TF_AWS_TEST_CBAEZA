@@ -17,7 +17,7 @@ jobs:
       contents: read
     steps:
       - name: configure aws credentials
-        uses: aws-actions/configure-aws-credentials@v1
+        uses: actions/checkout@v2
         with:
           role-to-assume: arn:aws:iam::042670738437:role/rol-github-terraform
           aws-region: us-east-1
