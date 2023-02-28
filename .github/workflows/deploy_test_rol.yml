@@ -1,8 +1,8 @@
 name: Despliegue en testing con rol
 
-# on:
-#    push:
-#      branches: [ testing ]
+on:
+   push:
+     branches: [ testing ]
 #  --profile cbaeza
 #   aws configure set region us-east-1 --profile cbaeza    
 #           aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }} --profile cbaeza
