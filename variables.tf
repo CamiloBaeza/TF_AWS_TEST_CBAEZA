@@ -4,37 +4,37 @@ variable "project" {
   description = "Project Name"
 }
 
-variable "sg_vpc_id" {
-  type        = string
-  description = "sg vpc ids"
-}
+# variable "sg_vpc_id" {
+#   type        = string
+#   description = "sg vpc ids"
+# }
 
-variable "subnet_db_name" {
-  type        = string
-  description = "subnet db name"
-}
+# variable "subnet_db_name" {
+#   type        = string
+#   description = "subnet db name"
+# }
 
-variable "vpc_cidr_block" {
-  type        = string
-  description = "Base CIDR Block for VPC"
-  default     = "10.32.14.0/24"
-}
+# variable "vpc_cidr_block" {
+#   type        = string
+#   description = "Base CIDR Block for VPC"
+#   default     = "10.32.14.0/24"
+# }
 
-variable "map_public_ip_on_launch" {
-  type        = bool
-  description = "Map a public IP address for Subnet instances"
-  default     = true
-}
+# variable "map_public_ip_on_launch" {
+#   type        = bool
+#   description = "Map a public IP address for Subnet instances"
+#   default     = true
+# }
 
-variable "vpc_id2" {
-  type        = string
-  description = "sadasdas"
-  default = "vpc-0845b166401067cbc"
-}
+# variable "vpc_id2" {
+#   type        = string
+#   description = "sadasdas"
+#   default = "vpc-0845b166401067cbc"
+# }
 
 
-variable "id_prefix" {
-  type        = string
-  description = "sadasdas"
-  default = "pl-02cd2c6b"
-}
+# variable "id_prefix" {
+#   type        = string
+#   description = "sadasdas"
+#   default = "pl-02cd2c6b"
+# }

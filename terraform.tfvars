@@ -6,6 +6,6 @@ project = "punkrock"
 #   prod = "us-east-1"
 # }
 
-sg_vpc_id =  "sg-09b59ff6264bcecd5"
-subnet_db_name = "dbsubnet"
+# sg_vpc_id =  "sg-09b59ff6264bcecd5"
+# subnet_db_name = "dbsubnet"
 # vpc_id = "vpc-0d42b7be6228a15bf"

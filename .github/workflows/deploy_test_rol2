@@ -1,8 +1,7 @@
 name: Despliegue en testing con rol
-#sd
-on:
-   push:
-     branches: [ testing ]
+# on:
+#    push:
+#      branches: [ testing ]
 jobs:
   deploy:
     name: Deploy
