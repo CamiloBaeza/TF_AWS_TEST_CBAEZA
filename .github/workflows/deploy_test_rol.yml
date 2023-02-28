@@ -19,7 +19,7 @@ jobs:
           role-to-assume: arn:aws:iam::042670738437:role/rol-github-terraform
           aws-region: us-east-1
       - uses: actions/checkout@v2
-         name: Checkout
+        name: Checkout
       - uses: hashicorp/setup-terraform@v1
         name: Configure Terraform
         with:
