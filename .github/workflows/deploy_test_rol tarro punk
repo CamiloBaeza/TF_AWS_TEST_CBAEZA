@@ -1,0 +1,54 @@
+name: Despliegue en testing con rol
+
+# on:
+#    push:
+#      branches: [ testing ]
+#  --profile cbaeza
+#   aws configure set region us-east-1 --profile cbaeza    
+#           aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }} --profile cbaeza
+#-backend-config="profile=cbaeza"
+jobs:
+  deploy:
+    name: Deploy
+    environment:
+      name: test
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - name: configure aws credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-to-assume: arn:aws:iam::042670738437:role/rol-github-terraform
+          aws-region: us-east-1
+      - uses: actions/checkout@v2
+      #   name: Checkout      
+      # - name: Configure AWS Profile
+      #   env:
+      #     AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      #     AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}          
+        # run: |
+        #   aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }} 
+      - uses: hashicorp/setup-terraform@v1
+        name: Configure Terraform
+        with:
+          terraform_version: 1.1.4
+      - name: Initialize the Terraform
+        run: |
+          terraform init -backend-config="encrypt=true" -backend-config="bucket=tarrito-punkrock-cb-tf-test" -backend-config="key=state/terraform.tfstate" -backend-config="region=us-east-1" 
+      - name: Select Workspace
+        run: |
+          terraform workspace list
+          terraform workspace select test || terraform workspace new test
+      - name: Terraform Validate
+        run: |
+          terraform state pull
+          terraform fmt
+          terraform validate
+      - name: Terraform Plan
+        run:  terraform plan
+      - name: Terraform Apply
+        run: terraform apply -auto-approve
+      - name: Validate Creation/Changes
+        run: terraform state list

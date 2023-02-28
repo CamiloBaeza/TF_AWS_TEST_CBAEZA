@@ -1,9 +1,9 @@
 name: Despliegue en testing con key
 #-backend-config="bucket=tarrito-punkrock-cb-tf-test"
 
-# on:
-#    push:
-#      branches: [ testing ]
+on:
+   push:
+     branches: [ testing ]
 jobs:
   deploy:
     name: Deploy
