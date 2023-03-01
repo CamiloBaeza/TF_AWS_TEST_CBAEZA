@@ -18,9 +18,11 @@ jobs:
       - name: Configure AWS Profile
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }} 
-      - name: Checkout
-        uses: actions/checkout@v3        
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        run: |
+          aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }} --profile cbaeza
+          aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }} --profile cbaeza
+          aws configure set region us-east-1 --profile cbaeza    
       - name: configure aws credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
