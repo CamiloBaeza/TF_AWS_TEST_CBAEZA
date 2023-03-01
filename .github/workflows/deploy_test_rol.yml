@@ -20,7 +20,7 @@ jobs:
           role-to-assume: arn:aws:iam::042670738437:role/rol-terraform-github
           aws-region: us-east-1
           role-session-name: charmander
-      # - run: aws sts get-session-token
+      - run:  aws --profile terraform sts assume-role --role-arn arn:aws:iam::042670738437:role/rol-terraform-github --role-session-name charmander
       - name: Install OIDC Client from Core Package
         run: npm install @actions/core@1.6.0 @actions/http-client
       - name: Get Id Token
