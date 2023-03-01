@@ -19,7 +19,7 @@ jobs:
         with:
           role-to-assume: arn:aws:iam::042670738437:role/rol-terraform-github
           aws-region: us-east-1
-      - run: aws sts get-session-token
+      # - run: aws sts get-session-token
       - name: Install OIDC Client from Core Package
         run: npm install @actions/core@1.6.0 @actions/http-client
       - name: Get Id Token
@@ -58,7 +58,7 @@ jobs:
           terraform_version: 1.1.4
       - name: Initialize the Terraform
         run: |
-          terraform init -backend-config="encrypt=true" -backend-config="bucket=tarrito-charmander-cb-tf-test" -backend-config="key=state/terraform.tfstate" -backend-config="region=us-east-1" 
+          terraform init -backend-config="encrypt=true" -backend-config="bucket=tarrito-charmander-cb-tf-test" -backend-config="key=state/terraform.tfstate" -backend-config="region=us-east-1" -backend-config="token=${{ env.AWS_SESSION_TOKEN }}"
       - name: Select Workspace
         run: |
           terraform workspace list
