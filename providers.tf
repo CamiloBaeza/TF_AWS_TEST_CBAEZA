@@ -13,7 +13,7 @@ terraform {
 
 provider "aws" {
   region  = "us-east-1"
-  profile = "terraform"
+  profile = "cbaeza"
   assume_role {
     role_arn = "arn:aws:iam::042670738437:role/rol-terraform-github"
   }
