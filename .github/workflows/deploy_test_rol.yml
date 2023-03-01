@@ -19,8 +19,7 @@ jobs:
         with:
           role-to-assume: arn:aws:iam::042670738437:role/rol-terraform-github
           aws-region: us-east-1
-        run: |       
-          aws sts get-session-token
+      - run: aws sts get-session-token
       - name: Install OIDC Client from Core Package
         run: npm install @actions/core@1.6.0 @actions/http-client
       - name: Get Id Token
