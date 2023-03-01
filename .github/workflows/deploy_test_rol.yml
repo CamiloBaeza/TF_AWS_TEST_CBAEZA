@@ -13,21 +13,21 @@ jobs:
       id-token: write
       contents: read
     steps:
-      - uses: actions/checkout@v2
-        name: Checkout
-      - name: Configure AWS Profile
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        run: |
-          aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }} --profile cbaeza
-          aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }} --profile cbaeza
-          aws configure set region us-east-1 --profile cbaeza    
       - name: configure aws credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          role-to-assume: arn:aws:iam::042670738437:role/rol-terraform-github
+          role-to-assume: arn:aws:iam::042670738437:role/rol-github-terraform
           aws-region: us-east-1
+      - uses: actions/checkout@v2
+        name: Checkout      
+      - name: Configure AWS Profile
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}          
+        run: |
+          aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }} --profile cbaeza
+          aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }} --profile cbaeza
+          aws configure set region us-east-1 --profile cbaeza   
       # - run:  aws sts assume-role --role-arn arn:aws:iam::042670738437:role/rol-terraform-github --role-session-name charmander
       - name: Install OIDC Client from Core Package
         run: npm install @actions/core@1.6.0 @actions/http-client
