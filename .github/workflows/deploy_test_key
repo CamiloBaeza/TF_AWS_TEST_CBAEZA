@@ -1,6 +1,4 @@
 name: Despliegue en testing con key
-#-backend-config="bucket=tarrito-punkrock-cb-tf-test"
-
 # on:
 #    push:
 #      branches: [ testing ]
@@ -29,7 +27,7 @@ jobs:
           terraform_version: 1.1.4
       - name: Initialize the Terraform
         run: |
-          terraform init  -backend-config="encrypt=true" -backend-config="bucket=tarrito-charmander-tf-test" -backend-config="key=state/terraform.tfstate" -backend-config="region=us-east-1" -backend-config="profile=cbaeza"
+          terraform init  -backend-config="encrypt=true" -backend-config="bucket=tarrito-punkrock-cb-tf-test" -backend-config="key=state/terraform.tfstate" -backend-config="region=us-east-1" -backend-config="profile=cbaeza"
       - name: Select Workspace
         run: |
           terraform workspace list
