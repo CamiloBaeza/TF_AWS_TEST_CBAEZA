@@ -18,6 +18,7 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v1
         with:
           role-to-assume: arn:aws:iam::042670738437:role/rol-terraform-github
+          # web-identity-token-file: /var/run/secrets/eks.amazonaws.com/serviceaccount/token
           aws-region: us-east-1
           role-session-name: gorditou
       - name: Install OIDC Client from Core Package
