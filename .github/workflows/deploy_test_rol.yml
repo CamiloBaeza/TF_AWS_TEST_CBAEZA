@@ -20,7 +20,6 @@ jobs:
         with:
           role-to-assume: arn:aws:iam::042670738437:role/rol-terraform-github
           aws-region: us-east-1
-          role-session-name: charmander
       # - run:  aws sts assume-role --role-arn arn:aws:iam::042670738437:role/rol-terraform-github --role-session-name charmander
       - name: Install OIDC Client from Core Package
         run: npm install @actions/core@1.6.0 @actions/http-client
@@ -60,7 +59,7 @@ jobs:
           terraform_version: 1.1.4
       - name: Initialize the Terraform
         run: |
-          terraform init -backend-config="encrypt=true" -backend-config="bucket=tarrito-charmander-cb-tf-test" -backend-config="key=state/terraform.tfstate" -backend-config="region=us-east-1" -backend-config="role_arn=arn:aws:iam::042670738437:role/rol-terraform-github" -backend-config="token=${{ env.AWS_SESSION_TOKEN }}" -backend-config="profile=terraform"
+          terraform init -backend-config="encrypt=true" -backend-config="bucket=tarrito-charmander-cb-tf-test" -backend-config="key=state/terraform.tfstate" -backend-config="region=us-east-1" -backend-config="role_arn=arn:aws:iam::042670738437:role/rol-terraform-github" -backend-config="token=${{ env.AWS_SESSION_TOKEN }}"
       - name: Select Workspace
         run: |
           terraform workspace list
