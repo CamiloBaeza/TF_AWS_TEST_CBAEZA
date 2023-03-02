@@ -73,18 +73,18 @@ jobs:
       - name: Initialize the Terraform
         run: |
           terraform init -backend-config="encrypt=true" -backend-config="bucket=tarrito-charmander-cb-tf-test" -backend-config="key=state/terraform.tfstate" -backend-config="region=us-east-1" -backend-config="token=${{ env.AWS_SESSION_TOKEN }}"
-      - name: Select Workspace
-        run: |
-          terraform workspace list
-          terraform workspace select test || terraform workspace new test
-      - name: Terraform Validate
-        run: |
-          terraform state pull
-          terraform fmt
-          terraform validate
-      - name: Terraform Plan
-        run:  terraform plan
-      - name: Terraform Apply
-        run: terraform apply -auto-approve
-      - name: Validate Creation/Changes
-        run: terraform state list
+      # - name: Select Workspace
+      #   run: |
+      #     terraform workspace list
+      #     terraform workspace select test || terraform workspace new test
+      # - name: Terraform Validate
+      #   run: |
+      #     terraform state pull
+      #     terraform fmt
+      #     terraform validate
+      # - name: Terraform Plan
+      #   run:  terraform plan
+      # - name: Terraform Apply
+      #   run: terraform apply -auto-approve
+      # - name: Validate Creation/Changes
+      #   run: terraform state list
