@@ -22,7 +22,9 @@ jobs:
           # web-identity-token-file: /var/run/secrets/eks.amazonaws.com/serviceaccount/token
           aws-region: us-east-1
           role-session-name: gorditou
-      - run: echo ${{ env.AWS_SESSION_TOKEN }}  
+      - env:
+            AWS_SESSION_TOKEN: ${{ env.AWS_SESSION_TOKEN }}  
+        run: echo $AWS_SESSION_TOKEN 
       # - env:
       #      ARN_ROLE_NAME: ${{ secrets.ARN_ROLE_NAME }}
       #   run: |
