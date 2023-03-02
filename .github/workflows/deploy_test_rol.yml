@@ -2,7 +2,7 @@ name: Despliegue en testing con rol
 on:
    push:
      branches: [ testing ] 
-     
+
 jobs:
   deploy:
     name: Deploy
@@ -23,7 +23,8 @@ jobs:
           aws-region: us-east-1
           role-session-name: gorditou
       # - run: aws sts get-caller-identity    
-      - run: aws sts assume-role --role-arn arn:aws:iam::042670738437:role/rol-terraform-github --role-session-name gorditou   
+      # - run: aws sts assume-role --role-arn arn:aws:iam::042670738437:role/rol-terraform-github --role-session-name gorditou   
+      - run: aws sts assume-role-with-web-identity --role-arn arn:aws:iam::042670738437:role/rol-terraform-github --role-session-name gorditou   
       - name: Install OIDC Client from Core Package
         run: npm install @actions/core@1.6.0 @actions/http-client
       - name: Get Id Token
