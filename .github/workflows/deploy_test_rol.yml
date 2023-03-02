@@ -21,7 +21,8 @@ jobs:
           # web-identity-token-file: /var/run/secrets/eks.amazonaws.com/serviceaccount/token
           aws-region: us-east-1
           role-session-name: gorditou
-      - run: aws sts get-caller-identity    
+      # - run: aws sts get-caller-identity    
+      - run: aws sts assume-role --role-arn arn:aws:iam::042670738437:role/rol-terraform-github --role-session-name gorditou   
       - name: Install OIDC Client from Core Package
         run: npm install @actions/core@1.6.0 @actions/http-client
       - name: Get Id Token
