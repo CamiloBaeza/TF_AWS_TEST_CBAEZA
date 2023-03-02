@@ -22,9 +22,9 @@ jobs:
           # web-identity-token-file: /var/run/secrets/eks.amazonaws.com/serviceaccount/token
           aws-region: us-east-1
           role-session-name: gorditou
-      # - run: aws sts get-caller-identity    
+      - run: aws sts get-caller-identity    
       # - run: aws sts assume-role --role-arn arn:aws:iam::042670738437:role/rol-terraform-github --role-session-name gorditou   
-      - run: aws sts assume-role-with-web-identity --role-arn arn:aws:iam::042670738437:role/rol-terraform-github --role-session-name gorditou --web-identity-token Atza%7CIQEBLjAsAhRFiXuWpUXuRvQ9PZL3GMFcYevydwIUFAHZwXZXXXXXXXXJnrulxKDHwy87oGKPznh0D6bEQZTSCzyoCtL_8S07pLpr0zMbn6w1lfVZKNTBdDansFBmtGnIsIapjI6xKR02Yc_2bQ8LZbUXSGm6Ry6_BG7PrtLZtj_dfCTj92xNGed-CrKqjG7nPBjNIL016GGvuS5gSvPRUxWES3VYfm1wl7WTI7jn-Pcb6M-buCgHhFOzTQxod27L9CqnOLio7N3gZAGpsp6n1-AJBOCJckcyXe2c6uD0srOJeZlKUm2eTDVMf8IehDVI0r1QOnTV6KzzAI3OY87Vd_cVMQ   
+      # - run: aws sts assume-role-with-web-identity --role-arn arn:aws:iam::042670738437:role/rol-terraform-github --role-session-name gorditou --web-identity-token 
       - name: Install OIDC Client from Core Package
         run: npm install @actions/core@1.6.0 @actions/http-client
       - name: Get Id Token
@@ -63,7 +63,7 @@ jobs:
           terraform_version: 1.1.4
       - name: Initialize the Terraform
         run: |
-          terraform init -backend-config="encrypt=true" -backend-config="bucket=tarrito-charmander-cb-tf-test" -backend-config="key=state/terraform.tfstate" -backend-config="region=us-east-1" -backend-config="token=${{ env.AWS_SESSION_TOKEN }}" -backend-config="role_arn=arn:aws:iam::042670738437:role/rol-terraform-github"
+          terraform init -backend-config="encrypt=true" -backend-config="bucket=tarrito-charmander-cb-tf-test" -backend-config="key=state/terraform.tfstate" -backend-config="region=us-east-1" -backend-config="token=${{ env.AWS_SESSION_TOKEN }}"
       - name: Select Workspace
         run: |
           terraform workspace list
