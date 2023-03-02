@@ -2,7 +2,11 @@ name: Despliegue en testing con rol
 on:
    push:
      branches: [ testing ]
-     
+runs:
+  using: 'node16'
+  pre: 'setup.js'
+  main: 'index.js'
+  post: 'cleanup.js'     
 jobs:
   deploy:
     name: Deploy
@@ -12,11 +16,6 @@ jobs:
     permissions:
       id-token: write
       contents: read
-    runs:
-      using: 'node16'
-      pre: 'setup.js'
-      main: 'index.js'
-      post: 'cleanup.js'
     steps:
       - name: Checkout
         uses: actions/checkout@v3    
