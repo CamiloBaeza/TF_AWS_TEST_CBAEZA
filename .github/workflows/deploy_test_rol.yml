@@ -15,17 +15,18 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3    
-      # - name: configure aws credentials
-      #   uses: aws-actions/configure-aws-credentials@v1
-      #   with:
-      #     role-to-assume: arn:aws:iam::042670738437:role/rol-terraform-github
-      #     # web-identity-token-file: /var/run/secrets/eks.amazonaws.com/serviceaccount/token
-      #     aws-region: us-east-1
-      #     role-session-name: gorditou
-      - env:
-           ARN_ROLE_NAME: ${{ secrets.ARN_ROLE_NAME }}
-        run: |
-          aws sts assume-role-with-web-identity --role-arn ${{ env.ARN_ROLE_NAME }} --role-session-name charmander --web-identity-token FAILFALSE 
+      - name: configure aws credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-to-assume: arn:aws:iam::042670738437:role/rol-terraform-github
+          # web-identity-token-file: /var/run/secrets/eks.amazonaws.com/serviceaccount/token
+          aws-region: us-east-1
+          role-session-name: gorditou
+      - run: echo ${{ env.AWS_SESSION_TOKEN }}  
+      # - env:
+      #      ARN_ROLE_NAME: ${{ secrets.ARN_ROLE_NAME }}
+      #   run: |
+      #     aws sts assume-role-with-web-identity --role-arn ${{ env.ARN_ROLE_NAME }} --role-session-name charmander --web-identity-token FAILFALSE 
       # - run: aws sts get-caller-identity    
       # - run: aws sts get-federation-token --generate-cli-skeleton    
       # - run: aws sts assume-role-with-web-identity 
