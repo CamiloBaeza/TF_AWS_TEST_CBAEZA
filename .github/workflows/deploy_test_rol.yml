@@ -12,7 +12,11 @@ jobs:
     permissions:
       id-token: write
       contents: read
-    using: 'node16'  
+    runs:
+      using: 'node16'
+      pre: 'setup.js'
+      main: 'index.js'
+      post: 'cleanup.js'
     steps:
       - name: Checkout
         uses: actions/checkout@v3    
