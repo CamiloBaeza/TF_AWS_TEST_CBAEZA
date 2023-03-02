@@ -54,7 +54,7 @@ jobs:
           jwtd $IDTOKEN
           echo "idToken=${IDTOKEN}" >> $GITHUB_OUTPUT
         id: tokenid                   
-      - uses: hashicorp/setup-terraform@v1
+      - uses: hashicorp/setup-terraform@v1-node16
         name: Configure Terraform
         with:
           terraform_version: 1.1.4
