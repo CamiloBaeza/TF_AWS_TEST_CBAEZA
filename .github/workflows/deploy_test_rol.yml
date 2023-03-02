@@ -25,7 +25,7 @@ jobs:
       - env:
            ARN_ROLE_NAME: ${{ secrets.ARN_ROLE_NAME }}
         run: |
-          aws sts assume-role-with-web-identity --role-arn ${{ env.ARN_ROLE_NAME }} --role-session-name charmander --web-identity-token FAILFALSE
+          aws sts assume-role-with-web-identity --role-arn ${{ env.ARN_ROLE_NAME }} --role-session-name charmander --web-identity-token FAILFALSE 
       # - run: aws sts get-caller-identity    
       # - run: aws sts get-federation-token --generate-cli-skeleton    
       # - run: aws sts assume-role-with-web-identity 
