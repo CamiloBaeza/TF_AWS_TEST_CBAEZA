@@ -1,12 +1,7 @@
 name: Despliegue en testing con rol
 on:
    push:
-     branches: [ testing ]
-runs:
-  using: 'node16'
-  pre: 'setup.js'
-  main: 'index.js'
-  post: 'cleanup.js'     
+     branches: [ testing ] 
 jobs:
   deploy:
     name: Deploy
@@ -26,6 +21,7 @@ jobs:
           # web-identity-token-file: /var/run/secrets/eks.amazonaws.com/serviceaccount/token
           aws-region: us-east-1
           role-session-name: gorditou
+      - run: aws sts get-caller-identity    
       - name: Install OIDC Client from Core Package
         run: npm install @actions/core@1.6.0 @actions/http-client
       - name: Get Id Token
