@@ -24,6 +24,7 @@ jobs:
           role-session-name: gorditou
       - run: aws sts get-caller-identity    
       - run: aws sts get-federation-token --generate-cli-skeleton    
+      - run: aws sts assume-role-with-web-identity --output json  
       # - run: aws sts assume-role --role-arn arn:aws:iam::042670738437:role/rol-terraform-github --role-session-name gorditou   
       # - run: aws sts assume-role-with-web-identity --role-arn arn:aws:iam::042670738437:role/rol-terraform-github --role-session-name gorditou --web-identity-token 
       - name: Install OIDC Client from Core Package
