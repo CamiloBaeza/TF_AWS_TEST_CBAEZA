@@ -79,11 +79,11 @@ jobs:
       - name: Terraform Validate
         run: |
           terraform state pull
-          terraform fmt -check
+          terraform fmt --check
           terraform validate
       - name: Terraform Plan
       #   run:  terraform plan
       # - name: Terraform Apply
         run: terraform apply -auto-approve
       - name: Validate Creation/Changes
-        run: terraform state list 
+        run: terraform state list
