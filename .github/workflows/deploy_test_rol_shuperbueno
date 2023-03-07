@@ -1,0 +1,89 @@
+name: Despliegue en testing con rol
+# on:
+#    push:
+#      branches: [ testing ]
+jobs:
+  deploy:
+    name: Deploy
+    environment:
+      name: test
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3    
+      - name: configure aws credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-to-assume: arn:aws:iam::042670738437:role/rol-terraform-github
+          # web-identity-token-file: /var/run/secrets/eks.amazonaws.com/serviceaccount/token
+          aws-region: us-east-1
+          role-session-name: gorditou
+      # - env:
+      #       AWS_SESSION_TOKEN: ${{ env.AWS_SESSION_TOKEN }}  
+      #   run: echo $AWS_SESSION_TOKEN 
+      # - env:
+      #      ARN_ROLE_NAME: ${{ secrets.ARN_ROLE_NAME }}
+      #   run: |
+      #     aws sts assume-role-with-web-identity --role-arn ${{ env.ARN_ROLE_NAME }} --role-session-name charmander --web-identity-token FAILFALSE 
+      # - run: aws sts get-caller-identity    
+      # - run: aws sts get-federation-token --generate-cli-skeleton    
+      # - run: aws sts assume-role-with-web-identity 
+      # - run: aws sts assume-role --role-arn arn:aws:iam::042670738437:role/rol-terraform-github --role-session-name gorditou   
+      # - run: aws sts assume-role-with-web-identity --role-arn arn:aws:iam::042670738437:role/rol-terraform-github --role-session-name gorditou --web-identity-token 
+      - name: Install OIDC Client from Core Package
+        run: npm install @actions/core@1.6.0 @actions/http-client
+      - name: Get Id Token
+        uses: actions/github-script@v6
+        id: idtoken
+        with:
+          script: |
+            const coredemo = require('@actions/core')
+            let id_token = await coredemo.getIDToken()
+            coredemo.setOutput('id_token', id_token)    
+      - uses: actions/github-script@v6
+        id: script
+        timeout-minutes: 10
+        with:
+          debug: true
+          script: |
+            const token = process.env['ACTIONS_RUNTIME_TOKEN']
+            const runtimeUrl = process.env['ACTIONS_ID_TOKEN_REQUEST_URL']
+            core.setOutput('TOKEN', token.trim())
+            core.setOutput('IDTOKENURL', runtimeUrl.trim())
+      - run: |
+          IDTOKEN=$(curl -H "Authorization: bearer  ${{steps.script.outputs.TOKEN}}" ${{steps.script.outputs.IDTOKENURL}}  -H "Accept: application/json; api-version=2.0" -H "Content-Type: application/json" -d "{}" | jq -r '.value')
+          echo $IDTOKEN
+          jwtd() {
+              if [[ -x $(command -v jq) ]]; then
+                  jq -R 'split(".") | .[0],.[1] | @base64d | fromjson' <<< "${1}"
+                  echo "Signature: $(echo "${1}" | awk -F'.' '{print $3}')"
+              fi
+          }
+          jwtd $IDTOKEN
+          echo "idToken=${IDTOKEN}" >> $GITHUB_OUTPUT
+        id: tokenid                   
+      - uses: hashicorp/setup-terraform@v1
+        name: Configure Terraform
+        with:
+          terraform_version: 1.1.4
+      - name: Initialize the Terraform
+        run: |
+          terraform init -backend-config="encrypt=true" -backend-config="bucket=tarrito-charmander-cb-tf-test" -backend-config="key=state/terraform.tfstate" -backend-config="region=us-east-1" -backend-config="token=${{ env.AWS_SESSION_TOKEN }}"
+      - name: Select Workspace
+        run: |
+          terraform workspace list
+          terraform workspace select test || terraform workspace new test
+      - name: Terraform Validate
+        run: |
+          terraform state pull
+          terraform fmt
+          terraform validate
+      - name: Terraform Plan
+      #   run:  terraform plan
+      # - name: Terraform Apply
+        run: terraform apply -auto-approve
+      - name: Validate Creation/Changes
+        run: terraform state list
