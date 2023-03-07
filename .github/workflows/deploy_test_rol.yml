@@ -79,7 +79,7 @@ jobs:
       - name: Terraform Validate
         run: |
           terraform state pull
-          terraform fmt
+          terraform fmt --check --diff
           terraform validate
       - name: Terraform Plan
       #   run:  terraform plan
