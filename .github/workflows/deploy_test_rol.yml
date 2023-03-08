@@ -42,4 +42,3 @@ jobs:
         run: terraform apply -auto-approve
       - name: Validate Creation/Changes
         run: terraform state list
-        
